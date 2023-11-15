@@ -149,7 +149,7 @@ def update_invoice_total(window):
 def main():
     app = QApplication([])
     app.setApplicationName("Yocto Invoice")
-    app.setWindowIcon(QIcon(f"{ICONS}/icon.png"))
+    # app.setWindowIcon(QIcon(f"{ICONS}/icon.png"))
 
     ui_loader = QUiLoader()
 
