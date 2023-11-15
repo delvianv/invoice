@@ -1,0 +1,36 @@
+[build-system]
+requires = ["setuptools"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "invoice-yocto"
+requires-python = ">=3.8"
+authors = [{name = "Delvian Valentine", email = "delvian.valentine@gmail.com"}]
+keywords = ["invoice"]
+classifiers = [
+  "Development Status :: 5 - Production/Stable",
+  "Intended Audience :: End Users/Desktop",
+  "Natural Language :: English",
+  "Operating System :: OS Independent",
+  "Programming Language :: Python :: 3.8",
+  "Topic :: Office/Business :: Financial",
+]
+dependencies = ["pyside6", "reportlab"]
+dynamic = ["version"]
+
+[project.gui-scripts]
+invoice-yocto = "invoice.ui:main"
+
+[tool.setuptools.dynamic]
+version = {attr = "invoice.__version__"}
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.setuptools.package-data]
+"invoice.data" = ["ui/*", "icons/*", "fonts/*"]
+
+[tool.pyright]
+venvPath = "."
+venv = ".venv"
+reportGeneralTypeIssues = "none"
