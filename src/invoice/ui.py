@@ -31,6 +31,12 @@ def browse_business_logo(dialog):
         _set_business_logo(dialog, file_name)
 
 
+def clear_business_logo(dialog):
+    dialog.button_business_logo.setText("Browse…")
+    dialog.button_business_logo.setIcon(QIcon())
+    dialog.business_logo = None
+
+
 def new_invoice(window):
     window.edit_customer_name.setText("")
     window.edit_customer_company.setText("")
@@ -110,6 +116,7 @@ def show_business_details(ui_loader, window):
             _set_business_logo(dialog, business_logo)
 
     dialog.button_business_logo.clicked.connect(lambda: browse_business_logo(dialog))
+    dialog.button_clear_logo.clicked.connect(lambda: clear_business_logo(dialog))
 
     if dialog.exec():
         window.settings.setValue("business_name", dialog.edit_business_name.text())
