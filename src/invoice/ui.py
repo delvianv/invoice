@@ -32,8 +32,8 @@ def browse_business_logo(dialog):
 
 
 def clear_business_logo(dialog):
-    dialog.button_business_logo.setText("Browse…")
     dialog.button_business_logo.setIcon(QIcon())
+    dialog.button_business_logo.setText("Browse…")
     dialog.business_logo = None
 
 
