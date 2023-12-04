@@ -126,7 +126,7 @@ def _invoice_total(model_invoice):
     return total
 
 
-def save_invoice(window, file_name):
+def save_pdf(window, file_name, doc_type="invoice"):
     spacer = Spacer(0, inch / 3)
 
     business_logo = None
@@ -157,7 +157,7 @@ def save_invoice(window, file_name):
         style=style_business_details,
     )
 
-    style_billing_details = TableStyle(
+    style_billing_details_invoice = TableStyle(
         [
             ("FONT", (0, 0), (-1, -1), "Vera"),
             ("FONT", (0, 0), (0, 0), "VeraBd"),
@@ -167,91 +167,7 @@ def save_invoice(window, file_name):
             ("VALIGN", (0, 1), (0, 1), "TOP"),
         ]
     )
-    table_billing_details = Table(
-        [
-            ("BILL TO", "#", invoice_num),
-            (customer_contact_details, "Date", invoice_date),
-            ("", "Due Date", invoice_due_date),
-            ("", "", ""),
-            ("", "", ""),
-            ("", "", ""),
-        ],
-        colWidths=(100 * mm, 25 * mm, 25 * mm),
-        style=style_billing_details,
-    )
-
-    items = [("Description", "Quantity", "Price")]
-    for item in window.model_invoice.items[:-1]:
-        items.append((item[0], item[1], f"{item[2]:,.2f}"))
-    items.append(("", "Total", f"{_invoice_total(window.model_invoice):,.2f}"))
-    style_items = TableStyle(
-        [
-            ("FONT", (0, 0), (-1, -1), "Vera"),
-            ("FONT", (0, 0), (2, 0), "VeraBd"),
-            ("FONT", (1, -1), (2, -1), "VeraBd"),
-            ("ALIGN", (0, 0), (2, 0), "CENTER"),
-            ("ALIGN", (1, 1), (2, -1), "RIGHT"),
-            ("BOX", (0, 0), (-1, -2), 1, black),
-            ("BOX", (1, -1), (-1, -1), 1, black),
-            ("INNERGRID", (0, 0), (-1, -1), 0.1, black),
-            ("LINEBELOW", (0, 0), (2, 0), 1, black),
-            ("LINEBELOW", (0, "splitlast"), (2, "splitlast"), 1, black),
-        ]
-    )
-    table_items = Table(
-        items, colWidths=(100 * mm, 25 * mm, 30 * mm), style=style_items, repeatRows=1
-    )
-
-    story = [
-        table_business_details,
-        Spacer(0, inch / 2),
-        Paragraph("INVOICE", style_title),
-        spacer,
-        table_billing_details,
-        spacer,
-        table_items,
-    ]
-
-    doc = SimpleDocTemplate(file_name, title="Invoice", author="Yocto Invoice")
-
-    try:
-        doc.build(story)
-    except OSError as err:
-        print(err)
-        raise
-
-
-def save_quote(window, file_name):
-    spacer = Spacer(0, inch / 3)
-
-    business_logo = None
-    if (logo := window.settings.value("business_logo")) is not None:
-        if QFile.exists(logo):
-            business_logo = Image(*_business_logo(window))
-
-    business_name = Paragraph(window.settings.value("business_name"), style_h2)
-    business_contact_details = Paragraph(
-        _business_contact_details(window), style_normal
-    )
-    customer_contact_details = Paragraph(
-        _customer_contact_details(window), style_normal
-    )
-    invoice_num = window.edit_invoice_num.value()
-    invoice_date = QDate.currentDate().toString("yyyy/MM/dd")
-
-    style_business_details = TableStyle(
-        [
-            ("SPAN", (0, 0), (0, 1)),
-            ("VALIGN", (0, 0), (1, 1), "TOP"),
-            ("ALIGN", (0, 0), (0, 0), "RIGHT"),
-        ]
-    )
-    table_business_details = Table(
-        [(business_logo, business_name), ("", business_contact_details)],
-        style=style_business_details,
-    )
-
-    style_billing_details = TableStyle(
+    style_billing_details_quote = TableStyle(
         [
             ("FONT", (0, 0), (-1, -1), "Vera"),
             ("FONT", (0, 0), (0, 0), "VeraBd"),
@@ -261,7 +177,19 @@ def save_quote(window, file_name):
             ("VALIGN", (0, 1), (0, 1), "TOP"),
         ]
     )
-    table_billing_details = Table(
+    table_billing_details_invoice = Table(
+        [
+            ("BILL TO", "#", invoice_num),
+            (customer_contact_details, "Date", invoice_date),
+            ("", "Due Date", invoice_due_date),
+            ("", "", ""),
+            ("", "", ""),
+            ("", "", ""),
+        ],
+        colWidths=(100 * mm, 25 * mm, 25 * mm),
+        style=style_billing_details_invoice,
+    )
+    table_billing_details_quote = Table(
         [
             ("BILL TO", "#", invoice_num),
             (customer_contact_details, "Date", invoice_date),
@@ -271,8 +199,12 @@ def save_quote(window, file_name):
             ("", "", ""),
         ],
         colWidths=(100 * mm, 25 * mm, 25 * mm),
-        style=style_billing_details,
+        style=style_billing_details_quote,
     )
+    if doc_type == "invoice":
+        table_billing_details = table_billing_details_invoice
+    else:
+        table_billing_details = table_billing_details_quote
 
     items = [("Description", "Quantity", "Price")]
     for item in window.model_invoice.items[:-1]:
@@ -299,20 +231,24 @@ def save_quote(window, file_name):
     story = [
         table_business_details,
         Spacer(0, inch / 2),
-        Paragraph("QUOTE", style_title),
+        Paragraph(doc_type.upper(), style_title),
         spacer,
         table_billing_details,
         spacer,
         table_items,
     ]
 
-    doc = SimpleDocTemplate(file_name, title="Quote", author="Yocto Invoice")
+    doc = SimpleDocTemplate(file_name, title=doc_type.title(), author="Yocto Invoice")
 
     try:
         doc.build(story)
     except OSError as err:
         print(err)
         raise
+
+
+def save_quote(window, file_name):
+    save_pdf(window, file_name, "quote")
 
 
 registerFont(TTFont("Vera", FONTS / "Vera.ttf"))

@@ -31,6 +31,4 @@ where = ["src"]
 "invoice.data" = ["ui/*", "icons/*", "fonts/*"]
 
 [tool.pyright]
-venvPath = "."
-venv = ".venv"
 reportGeneralTypeIssues = "none"
