@@ -35,27 +35,9 @@ def _business_contact_details(window):
     website = window.settings.value("business_website")
     reg_num = window.settings.value("business_reg_num")
 
-    contact_details = []
-    if address:
-        contact_details.append(address)
-    if city and province:
-        contact_details.append(f"{city}, {province}")
-    else:
-        if city:
-            contact_details.append(city)
-        if province:
-            contact_details.append(province)
-    if post_code and country:
-        contact_details.append(f"{post_code}, {country}")
-    else:
-        if post_code:
-            contact_details.append(post_code)
-        if country:
-            contact_details.append(country)
-    if phone:
-        contact_details.append(phone)
-    if email:
-        contact_details.append(email)
+    contact_details = _contact_details(
+        address, city, province, post_code, country, phone, email
+    )
     if website:
         contact_details.append(website)
     if reg_num:
@@ -77,22 +59,8 @@ def _business_logo(window):
     return temp_file, logo.width() / 2, logo.height() / 2
 
 
-def _customer_contact_details(window):
-    name = window.edit_customer_name.text()
-    company = window.edit_customer_company.text()
-    address = window.edit_customer_address.text()
-    city = window.edit_customer_city.text()
-    province = window.edit_customer_province.text()
-    post_code = window.edit_customer_post_code.text()
-    country = window.edit_customer_country.text()
-    phone = window.edit_customer_phone.text()
-    email = window.edit_customer_email.text()
-
+def _contact_details(address, city, province, post_code, country, phone, email):
     contact_details = []
-    if name:
-        contact_details.append(f"<b>{name}</b>")
-    if company:
-        contact_details.append(company)
     if address:
         contact_details.append(address)
     if city and province:
@@ -113,6 +81,29 @@ def _customer_contact_details(window):
         contact_details.append(phone)
     if email:
         contact_details.append(email)
+
+    return contact_details
+
+
+def _customer_contact_details(window):
+    name = window.edit_customer_name.text()
+    company = window.edit_customer_company.text()
+    address = window.edit_customer_address.text()
+    city = window.edit_customer_city.text()
+    province = window.edit_customer_province.text()
+    post_code = window.edit_customer_post_code.text()
+    country = window.edit_customer_country.text()
+    phone = window.edit_customer_phone.text()
+    email = window.edit_customer_email.text()
+
+    contact_details = []
+    if name:
+        contact_details.append(f"<b>{name}</b>")
+    if company:
+        contact_details.append(company)
+    contact_details.extend(
+        _contact_details(address, city, province, post_code, country, phone, email)
+    )
 
     return "<br />".join(contact_details)
 
