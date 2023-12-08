@@ -13,7 +13,6 @@ from .models import InvoiceModel, PriceEditor, QtyEditor
 
 ICONS = DATA / "icons"
 UI = DATA / "ui"
-HOME = QDir.homePath()
 
 HOME = QDir.homePath()
 
@@ -64,7 +63,7 @@ def save_invoice(ui_loader, window):
         window, dir=f"{HOME}/Invoice.pdf", filter="PDFs (*.pdf)"
     )[0]:
         try:
-            pdf.save_invoice(window, file_name)
+            pdf.save_pdf(window, file_name)
         except OSError as err:
             dialog = ui_loader.load(UI / "error.ui", window)
             dialog.label_error.setText("An error occurred while saving your invoice")
