@@ -1,0 +1,14 @@
+altgraph==0.17.4
+build==1.0.3
+-e git+ssh://git@github.com/delvianv/invoice.git@dab8a82cf34e8921319151da7d174299008cd5ce#egg=invoice_yocto
+packaging==23.2
+Pillow==10.1.0
+pyinstaller==6.2.0
+pyinstaller-hooks-contrib==2023.10
+pyproject_hooks==1.0.0
+PySide6==6.6.0
+PySide6-Addons==6.6.0
+PySide6-Essentials==6.6.0
+reportlab==4.0.7
+setuptools==68.2.2
+shiboken6==6.6.0
