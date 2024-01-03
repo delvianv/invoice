@@ -4,4 +4,4 @@
 
 ### Added
 
-- Save as quote
+-   Save as quote
