@@ -1,6 +1,5 @@
 altgraph==0.17.4
 build==1.0.3
--e git+ssh://git@github.com/delvianv/invoice.git@dab8a82cf34e8921319151da7d174299008cd5ce#egg=invoice_yocto
 packaging==23.2
 Pillow==10.1.0
 pyinstaller==6.2.0
