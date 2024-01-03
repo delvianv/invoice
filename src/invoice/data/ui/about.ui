@@ -109,7 +109,7 @@
       </font>
      </property>
      <property name="text">
-      <string>Copyright © 2023 &lt;a href=&quot;mailto:delvian.valentine@gmail.com&quot;&gt;Delvian Valentine&lt;/a&gt; &amp;lt;delvian.valentine@gmail.com&amp;gt;</string>
+      <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Copyright © 2024 &lt;a href=&quot;mailto:delvian.valentine@gmail.com&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;Delvian Valentine&lt;/span&gt;&lt;/a&gt; &amp;lt;delvian.valentine@gmail.com&amp;gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
      </property>
      <property name="alignment">
       <set>Qt::AlignCenter</set>

@@ -1,7 +1,6 @@
 # models.py
-# Copyright (c) 2023  Delvian Valentine <delvian.valentine@gmail.com>
 
-from PySide6.QtCore import Qt, QAbstractTableModel
+from PySide6.QtCore import QAbstractTableModel, QModelIndex, Qt
 from PySide6.QtWidgets import QDoubleSpinBox, QSpinBox, QStyledItemDelegate
 
 
@@ -12,7 +11,7 @@ class InvoiceModel(QAbstractTableModel):
         super().__init__()
         self.items = [["", "", ""]]
 
-    def data(self, index, role):
+    def data(self, index, role=Qt.DisplayRole):
         row, column = index.row(), index.column()
         item = self.items[row][column]
 
@@ -24,7 +23,7 @@ class InvoiceModel(QAbstractTableModel):
         if role == Qt.EditRole:
             return item
 
-    def setData(self, index, value, role):
+    def setData(self, index, value, role=Qt.EditRole):
         row, column = index.row(), index.column()
         num_items = len(self.items)
         parent = index.parent()
@@ -43,29 +42,31 @@ class InvoiceModel(QAbstractTableModel):
             self.dataChanged.emit(index, index)
             return True
 
-    def insertRows(self, row, count, parent):
+        return False
+
+    def insertRows(self, row, count, parent=QModelIndex):
         self.beginInsertRows(parent, row, row)
         self.items.append(["", "", ""])
         self.endInsertRows()
         return True
 
-    def removeRows(self, row, count, parent):
+    def removeRows(self, row, count, parent=QModelIndex):
         self.beginRemoveRows(parent, row, row)
         del self.items[row]
         self.endRemoveRows()
         return True
 
-    def headerData(self, section, orientation, role):
+    def headerData(self, section, orientation, role=Qt.DisplayRole):
         if role == Qt.DisplayRole:
             if orientation == Qt.Horizontal:
                 return self.columns[section]
             if orientation == Qt.Vertical:
                 return section + 1
 
-    def rowCount(self, parent):
+    def rowCount(self, parent=QModelIndex):
         return len(self.items)
 
-    def columnCount(self, parent):
+    def columnCount(self, parent=QModelIndex):
         return len(self.columns)
 
     def flags(self, index):

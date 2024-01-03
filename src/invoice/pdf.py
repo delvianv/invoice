@@ -1,5 +1,4 @@
 # pdf.py
-# Copyright (c) 2023  Delvian Valentine <delvian.valentine@gmail.com>
 
 from PySide6.QtCore import Qt, QDate, QFile, QTemporaryFile
 from PySide6.QtGui import QImage
