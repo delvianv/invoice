@@ -21,7 +21,7 @@ exe = EXE(
     a.binaries,
     a.datas,
     [],
-    name="Yocto Invoice",
+    name="YoctoInvoice",
     debug=False,
     bootloader_ignore_signals=False,
     strip=False,
