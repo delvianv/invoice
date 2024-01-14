@@ -1,5 +1,4 @@
 # ui.py
-# Copyright (c) 2023  Delvian Valentine <delvian.valentine@gmail.com>
 
 from PySide6.QtCore import QDate, QDir, QFile, QSettings
 from PySide6.QtGui import QIcon, QPixmap
