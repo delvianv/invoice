@@ -1,6 +1,6 @@
 # Yocto Invoice
 
-Make beautiful invoices quickly and easily
+Create beautiful invoices quickly and effortlessly
 
 ## Usage
 
@@ -20,11 +20,11 @@ Email delvian.valentine@gmail.com for help
 
 ## Acknowledgements
 
--   [Material Icons](https://fonts.google.com/icons)
--   [PyInstaller](https://pyinstaller.org/en/stable/)
--   [Qt for Python](https://wiki.qt.io/Qt_for_Python)
--   [ReportLab](https://www.reportlab.com/)
--   [UXWing](https://uxwing.com/)
+- [Material Icons](https://fonts.google.com/icons)
+- [PyInstaller](https://pyinstaller.org/en/stable/)
+- [Qt for Python](https://wiki.qt.io/Qt_for_Python)
+- [ReportLab](https://www.reportlab.com/)
+- [UXWing](https://uxwing.com/)
 
 ## Licence
 
